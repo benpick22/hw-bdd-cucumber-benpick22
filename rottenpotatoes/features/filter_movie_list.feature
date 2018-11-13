@@ -24,16 +24,15 @@ Background: movies have been added to database
 
 Scenario: restrict to movies with 'PG' or 'R' ratings
   # enter step(s) to check the 'PG' and 'R' checkboxes
-  When I check "ratings_PG"
-  And I check "ratings_R"
+  When I check the following ratings: PG, R
   # enter step(s) to uncheck all other checkboxes
-  And I uncheck "ratings_G"
-  And I uncheck "ratings_PG-13"
+  And I uncheck the following ratings: G, PG-13
+  
   # enter step to "submit" the search form on the homepage
-  When I press "ratings_submit"
+  And I press "ratings_submit"
   # enter step(s) to ensure that PG and R movies are visible
   
-  Then I should see "The Terminator"
+  And I should see "The Terminator"
   And I should see "When Harry Met Sally"
   And I should see "Amelie"
   And I should see "The Incredibles"
@@ -47,3 +46,6 @@ Scenario: restrict to movies with 'PG' or 'R' ratings
 
 Scenario: all ratings selected
   # see assignment
+  When I check the following ratings: G, PG, PG-13, R
+  And I press "ratings_submit"
+  Then I should see all the movies
